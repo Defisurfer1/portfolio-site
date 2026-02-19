@@ -27,6 +27,13 @@
 - [ ] Заменить placeholder-ссылки на реальные профили (`GitHub`, `LinkedIn`, `Telegram`).
 - [ ] При необходимости заменить демонстрационный текст "О себе"/"About Me" на финальный.
 
+## Чат-бот Никифор
+- На сайте подключён чат-бот **Никифор** (виджет в правом нижнем углу). Основа: [evgyur/cursor-ai-chatbot](https://github.com/evgyur/cursor-ai-chatbot).
+- Никифор отвечает на вопросы о владельце сайта и подсказывает, как связаться (email, соцсети).
+- **Чтобы бот работал на Vercel:** в [Vercel Dashboard](https://vercel.com) → проект **portfolio-site** → Settings → Environment Variables добавь переменную **`MINIMAX_API_KEY`** (ключ из [MiniMax Platform](https://platform.minimax.io)).
+- Локально: скопируй `.env.example` в `.env` и укажи свой `MINIMAX_API_KEY` (для локального теста API нужен свой backend или прокси).
+- Файлы: `api/chat.js` (Vercel serverless), `nikifor-widget.js` (виджет), подключение в `index.html` и `index2.html`.
+
 ## Деплой (Vercel)
 - **Продакшен:** https://portfolio-site-seven-sand-53.vercel.app
 - Ветка для деплоя: `master`. По `git push origin master` можно деплоить вручную через Vercel CLI (`vercel --prod`) или включить автодеплой (см. ниже).
@@ -36,7 +43,10 @@
 - `index.html` — исходный/предыдущий вариант страницы.
 - `index2.html` — актуальная версия страницы (AR + EN).
 - `readme.md` — рабочая документация проекта (этот файл).
-- `vercel.json` — конфиг Vercel (статический сайт).
+- `vercel.json` — конфиг Vercel (статический сайт + API).
+- `api/chat.js` — serverless-функция для чат-бота (MiniMax).
+- `nikifor-widget.js` — виджет чата «Никифор» на странице.
+- `.env.example` — пример переменных для бота (MINIMAX_API_KEY).
 - `mcps/` — служебная директория окружения.
 
 ## Документация по странице (`index2.html`)
