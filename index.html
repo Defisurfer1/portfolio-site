@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Pain · Креативный профессионал</title>
+  <style>
+    :root {
+      --bg-gradient-start: #0c1222;
+      --bg-gradient-end: #0f172a;
+      --accent: #0d9488;
+      --accent-warm: #f59e0b;
+      --accent-soft: rgba(13, 148, 136, 0.25);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --border-subtle: rgba(148, 163, 184, 0.2);
+      --shadow-soft: 0 18px 45px rgba(2, 6, 23, 0.85);
+      --radius-lg: 18px;
+      --radius-full: 999px;
+      --transition-fast: 220ms ease-out;
+      --transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+      --max-width: 960px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: var(--text-primary);
+      background: radial-gradient(circle at top left, #134e4a 0, transparent 45%),
+        radial-gradient(circle at bottom right, #1e3a5f 0, transparent 45%),
+        linear-gradient(160deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .shell {
+      position: relative;
+      width: 100%;
+      max-width: var(--max-width);
+      border-radius: 28px;
+      padding: 1px;
+      background: radial-gradient(circle at top left, rgba(13, 148, 136, 0.5), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.35), transparent 55%),
+        linear-gradient(135deg, rgba(13, 148, 136, 0.4), rgba(30, 58, 95, 0.6));
+      box-shadow: 0 20px 60px rgba(2, 6, 23, 0.9);
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    .frame {
+      border-radius: 26px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617 52%);
+      padding: 28px 26px 26px;
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 15% 0, rgba(13, 148, 136, 0.15), transparent 60%),
+        radial-gradient(circle at 85% 0, rgba(245, 158, 11, 0.1), transparent 60%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 3fr 2.2fr;
+      gap: 32px;
+      align-items: flex-start;
+      z-index: 1;
+    }
+
+    .animate-in {
+      opacity: 0;
+      animation: fadeInUp var(--transition-smooth) forwards;
+    }
+
+    .animate-in-1 { animation-delay: 0.1s; }
+    .animate-in-2 { animation-delay: 0.2s; }
+    .animate-in-3 { animation-delay: 0.3s; }
+    .animate-in-4 { animation-delay: 0.4s; }
+    .animate-in-5 { animation-delay: 0.5s; }
+    .animate-in-6 { animation-delay: 0.6s; }
+    .animate-in-7 { animation-delay: 0.7s; }
+    .animate-in-8 { animation-delay: 0.8s; }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.7)
+      );
+      color: var(--text-secondary);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #f1f5f9, var(--accent));
+      box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.4),
+        0 0 14px rgba(13, 148, 136, 0.6);
+    }
+
+    .pill-divider {
+      width: 1px;
+      height: 14px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(148, 163, 184, 0.7),
+        transparent
+      );
+    }
+
+    .pill-label-strong {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 40px;
+      letter-spacing: -0.03em;
+    }
+
+    .accent-name {
+      background: linear-gradient(120deg, var(--accent-warm), var(--accent), #22d3ee);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 25px rgba(13, 148, 136, 0.5);
+    }
+
+    h2 {
+      margin: 6px 0 0;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .hero-meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background-color: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .hero-meta-badge {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #f1f5f9, var(--accent-warm));
+    }
+
+    .hero-description {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 36rem;
+    }
+
+    .hero-description strong {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 9px 18px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0f766e, var(--accent));
+      border-color: rgba(94, 234, 212, 0.2);
+      color: #f1f5f9;
+      box-shadow: 0 14px 35px rgba(13, 148, 136, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 45px rgba(13, 148, 136, 0.55);
+      background: linear-gradient(135deg, var(--accent), #14b8a6);
+    }
+
+    .btn-ghost {
+      border-color: rgba(148, 163, 184, 0.45);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
+      color: var(--text-secondary);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(13, 148, 136, 0.5);
+      color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(13, 148, 136, 0.2);
+    }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+    }
+
+    main {
+      position: relative;
+      margin-top: 26px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(15, 23, 42, 0.7);
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .section-card {
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(30, 64, 175, 0.4);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(13, 148, 136, 0.18), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.12), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .section-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #f1f5f9, var(--accent));
+      box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.4),
+        0 0 14px rgba(13, 148, 136, 0.6);
+    }
+
+    .section-tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: var(--text-secondary);
+      background: rgba(15, 23, 42, 0.9);
+      white-space: nowrap;
+    }
+
+    .about-body p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    .about-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-highlight {
+      color: #e5e7eb;
+    }
+
+    footer {
+      margin-top: 10px;
+    }
+
+    .footer-card {
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.98));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(30, 64, 175, 0.4);
+      box-shadow: var(--shadow-soft);
+      padding: 16px 16px 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(13, 148, 136, 0.15), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.1), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .footer-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .contact-label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .contact-title {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .contact-email {
+      font-size: 14px;
+      color: var(--text-primary);
+      text-decoration: none;
+      position: relative;
+      width: fit-content;
+    }
+
+    .contact-email::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      height: 2px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--accent-warm), var(--accent));
+      opacity: 0.9;
+      transform-origin: left;
+      transform: scaleX(0.6);
+      border-radius: 1px;
+      transition: transform var(--transition-smooth), opacity var(--transition-fast);
+    }
+
+    .contact-email:hover::after {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    .contact-email:hover {
+      color: var(--accent);
+    }
+
+    .contact-email:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .socials {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px;
+      border-radius: var(--radius-full);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(30, 64, 175, 0.7);
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: transform var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .social-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px) scale(1.05);
+      border-color: var(--accent);
+      color: var(--accent);
+      background: radial-gradient(circle at top, rgba(13, 148, 136, 0.15), rgba(15, 23, 42, 0.98));
+      box-shadow: 0 12px 30px rgba(13, 148, 136, 0.35);
+    }
+
+    .social-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .footer-meta {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 10px;
+      opacity: 0.8;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.7);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 20px 14px;
+      }
+
+      .shell {
+        border-radius: 22px;
+      }
+
+      .frame {
+        border-radius: 21px;
+        padding: 22px 18px 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px 12px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      h2 {
+        font-size: 15px;
+      }
+
+      .hero-description {
+        font-size: 13px;
+      }
+
+      .section-card,
+      .footer-card {
+        padding: 14px 13px 13px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-ghost {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="frame">
+      <div class="grid">
+        <header>
+          <div class="pill animate-in animate-in-1">
+            <span class="pill-dot"></span>
+            <span class="pill-label-strong">Открыт для выбранных проектов</span>
+            <span class="pill-divider"></span>
+            <span>Портфолио · 2026</span>
+          </div>
+
+          <div>
+            <h1 class="animate-in animate-in-2"><span class="accent-name">Max Pain</span></h1>
+            <h2 class="animate-in animate-in-2">Креативный профессионал · Нью-Йорк</h2>
+
+            <div class="hero-meta animate-in animate-in-3">
+              <span>
+                <span class="hero-meta-badge"></span>
+                Родился в 1972
+              </span>
+              <span>
+                <span class="hero-meta-badge"></span>
+                50% концепт · 50% исполнение
+              </span>
+            </div>
+
+            <p class="hero-description animate-in animate-in-4">
+              Создаю чёткие, атмосферные проекты на стыке
+              <strong>дизайна, сторителлинга и технологий</strong>. Уделяю внимание
+              деталям, ясной подаче и спокойной, минималистичной эстетике.
+            </p>
+
+            <div class="hero-actions animate-in animate-in-5">
+              <a href="#contact" class="btn-primary">
+                <span>Связаться</span>
+                <span class="btn-icon" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" fill="none">
+                    <path
+                      d="M5 15L15 5M7 5H15V13"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </a>
+              <a href="#about" class="btn-ghost">
+                <span>Обо мне</span>
+              </a>
+            </div>
+          </div>
+        </header>
+
+        <div aria-hidden="true" class="section-card animate-in animate-in-6" style="min-height: 180px;">
+          <div class="section-card-inner">
+            <div class="section-heading">
+              <div class="section-title">
+                <span class="section-title-dot"></span>
+                В двух словах
+              </div>
+              <span class="section-tag">Тёмная тема · Минимум</span>
+            </div>
+            <div class="about-body">
+              <p>
+                Одностраничный сайт — лаконичная визитка: всё в одном HTML-файле,
+                без фреймворков и внешних ресурсов. Только типографика, контраст и лёгкая анимация.
+              </p>
+              <p>
+                Подставьте свой текст и ссылки — и страница станет вашей персональной визиткой,
+                которую можно разместить где угодно.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <main>
+        <div class="main-grid">
+          <section id="about" class="section-card animate-in animate-in-6" aria-labelledby="about-title">
+            <div class="section-card-inner">
+              <div class="section-heading">
+                <div class="section-title">
+                  <span class="section-title-dot"></span>
+                  О себе
+                </div>
+                <span class="section-tag">Кратко</span>
+              </div>
+              <div class="about-body" id="about-title">
+                <p class="about-highlight">
+                  Работаю на пересечении визуала, нарратива и цифровых инструментов.
+                </p>
+                <p>
+                  Здесь могут быть два-три коротких абзаца о вас: чем занимаетесь,
+                  как работаете, какие проекты и инструменты вам близки.
+                </p>
+                <p>
+                  Замените этот текст на свою историю, ключевые проекты или краткую биографию —
+                  достаточно, чтобы посетитель понял, стоит ли вам написать.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="contact" class="animate-in animate-in-7" aria-labelledby="contact-title">
+            <div class="footer-card">
+              <div class="footer-inner">
+                <div class="contact-label">
+                  <span class="contact-title" id="contact-title">Контакты</span>
+                  <a class="contact-email" href="mailto:max.pain@example.com">
+                    max.pain@example.com
+                  </a>
+                </div>
+
+                <div class="socials" aria-label="Соцсети">
+                  <a
+                    class="social-link"
+                    href="https://github.com/username"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="GitHub"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fill="currentColor"
+                        d="M12 .5C5.648.5.5 5.648.5 12c0 5.086 3.292 9.387 7.868 10.91.576.11.786-.246.786-.552 0-.272-.01-1.147-.016-2.082-3.2.695-3.876-1.355-3.876-1.355-.524-1.33-1.28-1.684-1.28-1.684-1.046-.715.08-.701.08-.701 1.158.082 1.768 1.189 1.768 1.189 1.028 1.763 2.698 1.254 3.356.959.104-.745.402-1.255.73-1.543-2.554-.29-5.235-1.277-5.235-5.681 0-1.255.45-2.28 1.187-3.083-.12-.29-.515-1.459.113-3.043 0 0 .967-.31 3.17 1.178a10.95 10.95 0 0 1 2.884-.388c.978.004 1.964.132 2.884.388 2.2-1.488 3.166-1.178 3.166-1.178.63 1.584.235 2.753.116 3.043.738.803 1.185 1.828 1.185 3.083 0 4.417-2.686 5.387-5.247 5.672.413.355.78 1.056.78 2.13 0 1.54-.014 2.778-.014 3.158 0 .31.206.672.792.558C20.214 21.383 23.5 17.083 23.5 12c0-6.352-5.148-11.5-11.5-11.5Z"
+                      />
+                    </svg>
+                  </a>
+
+                  <a
+                    class="social-link"
+                    href="https://linkedin.com/in/username"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fill="currentColor"
+                        d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.27 8.01h4.47V24H.27zM8.55 8.01h4.29v2.17h.06c.6-1.14 2.06-2.34 4.24-2.34 4.54 0 5.38 2.99 5.38 6.88V24h-4.47v-7.26c0-1.73-.03-3.95-2.41-3.95-2.42 0-2.79 1.89-2.79 3.83V24H8.55z"
+                      />
+                    </svg>
+                  </a>
+
+                  <a
+                    class="social-link"
+                    href="https://t.me/username"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Telegram"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fill="currentColor"
+                        d="M22.96 3.162c-.24-.205-.6-.24-.88-.1L2.33 13.18c-.27.13-.44.4-.43.7.02.3.21.56.49.66l4.52 1.64 2.14 4.77c.12.26.38.43.67.45h.03c.28 0 .54-.16.67-.4l2.26-4.02 4.51 1.63c.09.03.19.05.28.05.13 0 .27-.03.39-.09.2-.1.35-.28.42-.49l3.23-10.42c.1-.31.01-.65-.24-.86ZM9.26 14.41l8.26-5.1-4.99 6.01c-.03.03-.05.07-.07.1l-2.34 4.16-1.09-2.44c-.07-.15-.19-.27-.34-.32l-2.91-1.05 3.48-1.46Z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div class="footer-meta">
+                <span>
+                  <span class="dot"></span>
+                  Один HTML · Без зависимостей
+                </span>
+                <span>
+                  <span class="dot"></span>
+                  Тёмная тема · Бирюзовый акцент
+                </span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
+

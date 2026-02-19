@@ -1,0 +1,23 @@
+# Секреты и конфиги с ключами — никогда не коммитить
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets/
+*.secret
+config.local.*
+credentials*
+
+# Служебные и локальные данные
+.cursor/
+.vscode/settings.json
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# Временные и бэкапы
+*.bak
+*.tmp
+*~
