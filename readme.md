@@ -1,4 +1,4 @@
-﻿# README
+# README
 
 ## Проект
 Одностраничный портфолио-сайт в файле `index2.html` с поддержкой двух языков: арабский (основной, RTL) и английский (второй, LTR). Дизайн: тёмный градиентный фон, минималистичный стиль, блоки Hero / About / Contacts.
@@ -27,10 +27,16 @@
 - [ ] Заменить placeholder-ссылки на реальные профили (`GitHub`, `LinkedIn`, `Telegram`).
 - [ ] При необходимости заменить демонстрационный текст "О себе"/"About Me" на финальный.
 
+## Деплой (Vercel)
+- **Продакшен:** https://portfolio-site-seven-sand-53.vercel.app
+- Ветка для деплоя: `master`. По `git push origin master` можно деплоить вручную через Vercel CLI (`vercel --prod`) или включить автодеплой (см. ниже).
+- **Автодеплой при push:** в [Vercel Dashboard](https://vercel.com) → проект **portfolio-site** → Settings → Git: подключи репозиторий GitHub (Login Connection), затем выбери Production Branch = `master`. После этого каждый `git push origin master` будет автоматически собирать и выкатывать сайт.
+
 ## Структура проекта
 - `index.html` — исходный/предыдущий вариант страницы.
 - `index2.html` — актуальная версия страницы (AR + EN).
 - `readme.md` — рабочая документация проекта (этот файл).
+- `vercel.json` — конфиг Vercel (статический сайт).
 - `mcps/` — служебная директория окружения.
 
 ## Документация по странице (`index2.html`)
